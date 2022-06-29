@@ -6,7 +6,7 @@
 //
 
 struct Client {
-    let waitingPerson: Int = Int.random(in: 1...30)
+    let waitingPerson: Int = Int.random(in: 10...30)
     var waitingNumber: Int?
     
     mutating func appendCustomer() -> CustomerQueue<Client> {
