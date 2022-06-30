@@ -1,25 +1,23 @@
 //
 //  BankManager.swift
-//  Created by yagom.
+//  Created by 수꿍, 브래드.
 //  Copyright © yagom academy. All rights reserved.
 //
 import Foundation
 
 struct BankManager {
-    var clientInCharge: Int = 0
-    
-    mutating func work(from customerQueue: inout CustomerQueue<Client>) -> Int {
-        var clientIndexTest: Int = 0
+    mutating func work(from clientQueue: inout ClientQueue<Client>) -> Int {
+        var servedClient: Int = 0
         
-        while customerQueue.isEmpty == false {
-            guard let clientIndex = customerQueue.dequeue()?.waitingNumber else {
+        while clientQueue.isEmpty == false {
+            guard let clientIndex = clientQueue.dequeue()?.waitingNumber else {
                 return 0
             }
             print("\(clientIndex)번 고객 업무 시작")
             Thread.sleep(forTimeInterval: 0.07)
             print("\(clientIndex)번 고객 업무 완료")
-            clientIndexTest = clientIndex
+            servedClient = clientIndex
         }
-        return clientIndexTest
+        return servedClient
     }
 }

@@ -5,14 +5,11 @@
 //  Created by 수꿍, 브래드 on 2022/06/29.
 //
 
-//let bankerA = BankManger()
-//let bank = Bank(bankManger: bankerA)
-
 class Bank {
     var bankManager: BankManager
-    var clientInCharge: Int = 0
-    let waitingPerson: Int = Int.random(in: 10...30)
-    lazy var customerQueue: CustomerQueue<Client> = makeCustomerQueue()
+    var servedClient: Int = 0
+    let waitingClient: Int = Int.random(in: 10...30)
+    lazy var clientQueue: ClientQueue<Client> = makeClientQueue()
     
     init(bankManager: BankManager) {
         self.bankManager = bankManager
@@ -36,27 +33,27 @@ class Bank {
         }
     }
     
-    func makeCustomerQueue() -> CustomerQueue<Client> {
-        var customerQueue = CustomerQueue<Client>()
+    func makeClientQueue() -> ClientQueue<Client> {
+        var clientQueue = ClientQueue<Client>()
 
-        for waitingNumber in 1...waitingPerson {
+        for waitingNumber in 1...waitingClient {
             let client = Client(waitingNumber: waitingNumber)
-            customerQueue.enqueue(data: client)
+            clientQueue.enqueue(data: client)
         }
-        return customerQueue
+        return clientQueue
     }
     
     func runBusiness() {
-        let bankMangerWork = bankManager.work(from: &customerQueue)
-        clientInCharge = bankMangerWork
+        let bankMangerWork = bankManager.work(from: &clientQueue)
+        servedClient = bankMangerWork
         terminateBusiness()
     }
 
     func terminateBusiness() {
-        let bankMangerTime = Double(clientInCharge) * 0.7
+        let bankMangerTime = Double(servedClient) * 0.7
         print("""
         업무가 마감되었습니다. \
-        오늘 업무를 처리한 고객은 총 \(clientInCharge)명이며, \
+        오늘 업무를 처리한 고객은 총 \(servedClient)명이며, \
         총 업무시간은 \(String(format: "%.1f", bankMangerTime))초입니다.
         """)
     }
