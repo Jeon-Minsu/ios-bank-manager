@@ -14,47 +14,49 @@ struct Bank {
     init(bankManager: BankManager) {
         self.bankManager = bankManager
     }
-    
+
     mutating func run() {
-        print("1 : 은행개점\n2 : 종료")
-        print("입력 : ", terminator: "")
-        
-        guard let choiceOption = readLine() else {
+        showMenu()
+        guard let option = readLine() else {
             return
         }
-        
-        switch choiceOption {
-        case "1":
-            reset()
-            runBusiness()
-            terminateBusiness()
-            run()
-        case "2":
+        choose(option)
+    }
+}
+
+extension Bank {
+    private func showMenu() {
+        print("1 : 은행개점\n2 : 종료")
+        print("입력 : ", terminator: "")
+    }
+    
+    private mutating func choose(_ option: String) {
+        switch option {
+        case "\(Options.open)":
+            openBank()
+        case "\(Options.close)":
             break
         default:
-            print("잘못된 입력 입니다. 다시 입력해주세요")
-            run()
+            requestReInput()
         }
     }
     
+    private mutating func requestReInput() {
+        print("잘못된 입력 입니다. 다시 입력해주세요")
+        run()
+    }
+    
+    private mutating func openBank() {
+        reset()
+        runBusiness()
+        terminateBusiness()
+        run()
+    }
+
     mutating func reset() {
-        servedClient = 0
+        servedClient = .zero
         waitingClient = Int.random(in: 10...30)
         clientQueue = makeClientQueue()
-    }
-    
-    mutating private func makeClientQueue() -> ClientQueue<Client>? {
-        var clientQueue = ClientQueue<Client>()
-        
-        guard let waitingClient = waitingClient else {
-            return nil
-        }
-
-        for waitingNumber in 1...waitingClient {
-            let client = Client(waitingNumber: waitingNumber)
-            clientQueue.enqueue(client)
-        }
-        return clientQueue
     }
     
     mutating private func runBusiness() {
@@ -78,5 +80,19 @@ struct Bank {
         오늘 업무를 처리한 고객은 총 \(servedClient)명이며, \
         총 업무시간은 \(String(format: "%.1f", bankingHours))초입니다.
         """)
+    }
+    
+    mutating private func makeClientQueue() -> ClientQueue<Client>? {
+        var clientQueue = ClientQueue<Client>()
+        
+        guard let waitingClient = waitingClient else {
+            return nil
+        }
+
+        for waitingNumber in 1...waitingClient {
+            let client = Client(waitingNumber: waitingNumber)
+            clientQueue.enqueue(client)
+        }
+        return clientQueue
     }
 }

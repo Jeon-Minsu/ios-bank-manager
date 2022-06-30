@@ -4,6 +4,6 @@
 //  Copyright © yagom academy. All rights reserved.
 //
 
-let bankerA = Banker()
-var wooriBank = Bank(bankManager: bankerA)
+let banker = Banker()
+var wooriBank = Bank(bankManager: banker)
 wooriBank.run()

@@ -14,16 +14,16 @@ protocol BankManager {
 
 extension BankManager {
     func work(from clientQueue: inout ClientQueue<Client>) -> Int {
-        var servedClient: Int = 0
+        var servedClient: Int = .zero
         
         while clientQueue.isEmpty == false {
             guard let clientIndex = clientQueue.dequeue()?.waitingNumber else {
-                return 0
+                return .zero
             }
             print("\(clientIndex)번 고객 업무 시작")
             Thread.sleep(forTimeInterval: time)
             print("\(clientIndex)번 고객 업무 완료")
-            servedClient = clientIndex
+            servedClient += 1
         }
         return servedClient
     }
