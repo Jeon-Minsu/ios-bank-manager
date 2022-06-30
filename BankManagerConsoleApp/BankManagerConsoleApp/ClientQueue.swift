@@ -14,7 +14,7 @@ struct ClientQueue<T> {
         return linkedList.isEmpty
     }
     
-    mutating func enqueue(data: T) {
+    mutating func enqueue(_ data: T) {
         linkedList.append(data: data)
     }
     
