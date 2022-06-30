@@ -32,9 +32,9 @@ extension Bank {
     
     private mutating func choose(_ option: String) {
         switch option {
-        case "\(Options.open)":
+        case Options.open.description:
             openBank()
-        case "\(Options.close)":
+        case Options.close.description:
             break
         default:
             requestReInput()
@@ -53,13 +53,13 @@ extension Bank {
         run()
     }
 
-    mutating func reset() {
+    private mutating func reset() {
         servedClient = .zero
         waitingClient = Int.random(in: 10...30)
         clientQueue = makeClientQueue()
     }
     
-    mutating private func runBusiness() {
+    private mutating func runBusiness() {
         guard var queue = clientQueue else {
             return
         }
@@ -68,7 +68,7 @@ extension Bank {
         servedClient = handledClient
     }
 
-    mutating private func terminateBusiness() {
+    private mutating func terminateBusiness() {
         guard let servedClient = servedClient else {
             return
         }
@@ -82,7 +82,7 @@ extension Bank {
         """)
     }
     
-    mutating private func makeClientQueue() -> ClientQueue<Client>? {
+    private mutating func makeClientQueue() -> ClientQueue<Client>? {
         var clientQueue = ClientQueue<Client>()
         
         guard let waitingClient = waitingClient else {
