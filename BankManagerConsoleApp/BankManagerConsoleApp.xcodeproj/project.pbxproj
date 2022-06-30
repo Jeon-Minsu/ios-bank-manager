@@ -122,9 +122,9 @@
 				A3023D8B286A8CAA001FCD3B /* Node.swift */,
 				20792C09286A8E4B00BE6E93 /* LinkedList.swift */,
 				A3023D8D286A9DD0001FCD3B /* CustomerQueue.swift */,
+				A398E7E5286C6C1B00B0519F /* Bank.swift */,
 				C7D65D1A259C8190005510E0 /* BankManager.swift */,
 				A398E7E3286C297E00B0519F /* Client.swift */,
-				A398E7E5286C6C1B00B0519F /* Bank.swift */,
 			);
 			path = BankManagerConsoleApp;
 			sourceTree = "<group>";

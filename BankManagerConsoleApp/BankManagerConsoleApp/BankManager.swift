@@ -5,21 +5,18 @@
 //
 import Foundation
 
-struct BankManger {
-    var customerQueue: CustomerQueue<Client>?
+struct BankManager {
+    var clientInCharge: Int = 0
     
-    mutating func work() -> Int {
-        var client = Client()
-        let result = client.appendCustomer()
+    mutating func work(from customerQueue: inout CustomerQueue<Client>) -> Int {
         var clientIndexTest: Int = 0
-        customerQueue = result
         
-        while customerQueue!.isEmpty == false {
-            guard let clientIndex = customerQueue?.dequeue()?.waitingNumber else {
+        while customerQueue.isEmpty == false {
+            guard let clientIndex = customerQueue.dequeue()?.waitingNumber else {
                 return 0
             }
             print("\(clientIndex)번 고객 업무 시작")
-            Thread.sleep(forTimeInterval: 0.7)
+            Thread.sleep(forTimeInterval: 0.07)
             print("\(clientIndex)번 고객 업무 완료")
             clientIndexTest = clientIndex
         }

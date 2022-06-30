@@ -5,13 +5,20 @@
 //  Created by 수꿍, 브래드 on 2022/06/29.
 //
 
-struct Bank {
-    // let banker: BankManger?
-    let numberOfBankers: Int = 3
-    var bankManager = BankManger()
-    var bankMangerTest: Int = 0
+//let bankerA = BankManger()
+//let bank = Bank(bankManger: bankerA)
+
+class Bank {
+    var bankManager: BankManager
+    var clientInCharge: Int = 0
+    let waitingPerson: Int = Int.random(in: 10...30)
+    lazy var customerQueue: CustomerQueue<Client> = makeCustomerQueue()
     
-    mutating func run() {
+    init(bankManager: BankManager) {
+        self.bankManager = bankManager
+    }
+    
+    func run() {
         print("1 : 은행개점\n2 : 종료")
         print("입력 : ", terminator: "")
         guard let choiceOption = readLine() else {
@@ -29,24 +36,28 @@ struct Bank {
         }
     }
     
-    mutating func runBusiness() {
-        for element in 1...numberOfBankers {
-            let bankMangerWork = bankManager.work()
-            bankMangerTest = bankMangerWork
-            print("\(element)번 은행원 업무 처리")
-            terminateBusiness()
+    func makeCustomerQueue() -> CustomerQueue<Client> {
+        var customerQueue = CustomerQueue<Client>()
+
+        for waitingNumber in 1...waitingPerson {
+            let client = Client(waitingNumber: waitingNumber)
+            customerQueue.enqueue(data: client)
         }
+        return customerQueue
     }
     
+    func runBusiness() {
+        let bankMangerWork = bankManager.work(from: &customerQueue)
+        clientInCharge = bankMangerWork
+        terminateBusiness()
+    }
+
     func terminateBusiness() {
-//        guard let bankMangerTime = bankMangerTest else {
-//            return
-//        }
-        let bankMangerTime = bankMangerTest
+        let bankMangerTime = Double(clientInCharge) * 0.7
         print("""
         업무가 마감되었습니다. \
-        오늘 업무를 처리한 고객은 총 \(bankMangerTime)명이며, \
-        총 업무시간은 \(String(format: "%.1f", Double(bankMangerTime) * 0.7))초입니다.
+        오늘 업무를 처리한 고객은 총 \(clientInCharge)명이며, \
+        총 업무시간은 \(String(format: "%.1f", bankMangerTime))초입니다.
         """)
     }
 }
