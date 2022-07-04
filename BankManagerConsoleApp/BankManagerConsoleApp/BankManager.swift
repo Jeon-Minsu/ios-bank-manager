@@ -4,6 +4,10 @@
 //  Copyright © yagom academy. All rights reserved.
 //
 
-struct BankManager: Banker {
+struct DepositBankManager: Banker {
     let time = 0.7
+}
+
+struct LoanBankManager: Banker {
+    let time = 5.0
 }
