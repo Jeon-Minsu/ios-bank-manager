@@ -30,9 +30,9 @@ struct Bank {
     
     private mutating func choose(_ option: String) {
         switch option {
-        case Option.open.description:
+        case Option.open:
             openBank()
-        case Option.close.description:
+        case Option.close:
             break
         default:
             requestReInput()
