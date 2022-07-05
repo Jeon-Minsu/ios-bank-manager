@@ -48,21 +48,19 @@ extension Banker {
                 return
             }
             if client.desiredServices == "예금" {
-                // DispatchQueue.global().async(group: group, execute: viewRed(client))
                 deQueue.async(group: group) {
                     semaphore.wait()
-                        print("예금담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 시작")
+                        print("🚀예금담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 시작")
                         Thread.sleep(forTimeInterval: time)
-                        print("예금담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 완료")
+                        print("🚀예금담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 완료")
                     semaphore.signal()
                 }
             } else if client.desiredServices == "대출" {
-                // DispatchQueue.global().async(group: group, execute: viewRed2(client))
                 loQueue.async(group: group) {
                     semaphore1.wait()
-                    print("대출담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 시작")
+                    print("📝대출담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 시작")
                     Thread.sleep(forTimeInterval: 1.1)
-                    print("대출담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 완료")
+                    print("📝대출담당 매니저 \(client.waitingNumber)번 고객 \(client.desiredServices)업무 완료")
                     semaphore1.signal()
                 }
             }
@@ -72,7 +70,6 @@ extension Banker {
     }
     
     func work(from clientQueue: inout ClientQueue<Client>) -> Int {
-
         var servedClient: Int = .zero
         workBanker(&clientQueue, &servedClient)
         
